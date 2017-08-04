@@ -7,4 +7,4 @@ This repository is part of the student enrollment system project.
 
 Integrated with travis and AWS CodeDeploy
 
-Watch out for updates
+EC2 is down , still figuring  out how to deploy
