@@ -1,22 +1,20 @@
 sudo: required
-
 language: java
-
 services:
-  - docker # required, but travis uses older version of docker :(
-
+- docker
 install:
-  - echo "install nothing!" # put your normal pre-testing installs here
-
+- echo "install nothing!"
 script:
-  - echo "no tests!" # put your normal testing scripts here
-
+- echo "no tests!"
 after_success:
-  - docker --version  # document the version travis is using
-  - pip install --user awscli # install aws cli w/o sudo
-  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
-  - eval $(aws ecr get-login --region us-east-1) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-  - docker build -t my_example_app .
-  - docker tag my_example_app:latest 128344620597.dkr.ecr.us-east-1.amazonaws.com/user_service:latest
-  - docker push 128344620597.dkr.ecr.us-east-1.amazonaws.com/user_service:latest
-
+- docker --version
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
+- eval $(aws ecr get-login --region us-east-1)
+- docker build -t my_example_app .
+- docker tag my_example_app:latest 128344620597.dkr.ecr.us-east-1.amazonaws.com/user_service:latest
+- docker push 128344620597.dkr.ecr.us-east-1.amazonaws.com/user_service:latest
+env:
+  global:
+  - secure: hClIM3BTAr46JKB+pmhbxiRg3jziO+jVnnoSvugKaWw5dJIXAj2OQpA7tJifSICimwzGYn7vE4MY/RRGT4hJRraUMFwXLqTzABCbi7n8WJNyfNUjwdAPzT7HlpEPteuzB8PUyINx+Bc3VUWmstQc/A/liEvMTZPgu9ndXSlCc0EdmNjDdCPBMm+Br/Y3svhxnWsfDfbWaAZTgB5KWMoQLdMSNChWqV5PW/QH0Y9gF2LmfP8b3JTO0WvIYG8MAmFL7lZBoFIYLeuMpeoVZZiFDMIqnsEz13mnNydyzsSY1X5mSDE2CdfUziNNFL2qr0hj4PJG5YMhw+Lnb0RSv3N/yaPcqpf6U5L5X7cWXAdHdyAQPy0nEBxfMV4T5mIjkifqywo7I4Z48gPI+JmjnASiY96EfEjhqlcj2/hAiREkNE8sHqGTR+ar346egmrTV33TGsOMeKOACIlgkZSLD04p/Y8WmPP4Z6HBSY5aNGHvdJHAd17n0QDzl2O7lF7RgWnjbke3jboQXA6ePNj8wF9uTx3Ix29hZnlAhdgyOnnk+/EKHaouFylZtAeznJGGBU5ImfWQSjCMu9rwUoN2neRnbr7zOMJDwygsJij/1i3n/IWs+wtxGsI4Y7XtssKo3jUMZEpEW8PwPwULU1zqllFRAnAdjDEZhB5BUmw6Siq22Pk=
+  - secure: RdaxuZo/uEAlygU1NFJSWVmyK1QjxsHkjt4Qwhu4dJyvVpoGspWssHpHVwMibVJz1pjx2DhO0ioHSxPScSL7Z7WkpydoIhFvG/wo0tS2xAySFnfp793AuBvlPFqq3LsXsfkK/SNGwo4MzL78pPtL8Np87Ud5eMWuh8ngLjSK8bOYv0s0hPAdt5Ok3hdkLUF4cgwuqrIz1+7X604AmyH2TbQeov8EQrCPeddMeNMWlDG/Ve3OsZMA4+1vDl11VpX5AztWqpWLwJEFfrCPbiOg0kQwbMuyFPnZIE8XoLAZ1Y2SSslf/8Aiv0ZLAiH2sRyumVoSuaFpj7UTdjU6VRcmY2qzaBk6VbnwPagidZIfeIfBR8wZwYta2tvWyo8QatM0fsdbqN8lrMWXFKkkI+qfr8n1shvz26OdqHLTlSix0Lnd5AZ6jPHh7IJhtBYkork+ZYZj6h+2efMXYsJBTkaV3TUtoe7bZAOEjIF7cq+jvoJFHioRNLkOa9Ovk6PChQk23IfbehEij3ziCDBZPlpBtkkWY8Ae0Fs5Zl8vHmlbXmIGABVtsvrn1vvZznGoHhn++FHfd10jiqh3XUVB4RaRIaWwpaUM+UmGD7qX3uGHTQ+vYlKS9Mr9Pvolx6BehfWkEw2BqGiib2wYALQL6s5MqVDrr8mmfqMfSnEToeejv4M=
