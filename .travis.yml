@@ -2,10 +2,6 @@ sudo: required
 language: java
 services:
 - docker
-install:
-- echo "install nothing!"
-script:
-- echo "no tests!"
 after_success:
 - docker --version
 - pip install --user awscli
