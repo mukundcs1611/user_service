@@ -1,9 +1,22 @@
+sudo: required
+
 language: java
 
- deploy:
-      - provider: s3
-        ⋮ # rest of S3 deployment for MyApp.zip
-      - provider: codedeploy
-        access_key_id: "AKIAJQ4WAYCE4I3PD34A"
-        secret_access_key: "Un4BewRy+4yiA8t0Lu47J7wQ5tQse0vydgBwLHkBx3cDdfIAtX//7EDNgVFQ98waVlFvdbXL3NtnIExZzkogK8qSllQkkzHc+zpY1OP35SH0R1Vr6RyuleuuyMSopUd0ie0kaNZUdBesreab6UNSGWTSixZ3uh4XrDAG+BjjSqp2sMUn8mfsDXKvtfeLHQIUrfruspMPHMNdpj/UrGOiPCXSGzL8ZpvfE1f7HfxERSAqYFL8cJZwGtCIndSII55qn+DkBPiI5b8+LpwECCXgxVwVnxPd/xhwj0oEy9VGUGjT2iFyS/1lmF47O8VhhnTeEyLWKBYW+Z9z5EhSoVaRNGc72uYhh/rMae1I4KfzaRjNrBwqUOHFX7Gc1rdxaZJBZZazsaqIvwxj5x9pACj6Lh0lfEKzSWeTy8lUCg/Jla5nbaFOgxOi/RDFbb5H+4W/qFxxPXnx/qRnJ0Au5fnO0F4YwJUAVKzma0R85+Fizvsr1U5vtf0PLWdnEiVh83XdkvnW3NNEqZaaauFOsrkkTeg9vxt+Q+b139cRBsrYDrHNFyX00lWF2OtOis+2jXYRXBPVbxzwc123E3A0XkunV+CS/ScLzbT2Xx8J79A0QNHjl4g534q/eZWHkT0CAEgALq5MTwsA5qkAZpTyYF5VdfvjopNy9yY0w931QL8cknw="
-        bucket: "enrollmentsystem-user-service"
+services:
+  - docker # required, but travis uses older version of docker :(
+
+install:
+  - echo "install nothing!" # put your normal pre-testing installs here
+
+script:
+  - echo "no tests!" # put your normal testing scripts here
+
+after_success:
+  - docker --version  # document the version travis is using
+  - pip install --user awscli # install aws cli w/o sudo
+  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+  - eval $(aws ecr get-login --region us-east-1) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+  - docker build -t my_example_app .
+  - docker tag my_example_app:latest 128344620597.dkr.ecr.us-east-1.amazonaws.com/user_service:latest
+  - docker push 128344620597.dkr.ecr.us-east-1.amazonaws.com/user_service:latest
+
