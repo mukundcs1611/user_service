@@ -42,3 +42,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+out/
+src/main/resources/
+src/main/webapp/WEB-INF/
+target/
