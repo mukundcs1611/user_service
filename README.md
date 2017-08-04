@@ -1,7 +1,7 @@
+# User-Service 
+[![Build Status](https://travis-ci.org/mukundcs1611/user_service.svg?branch=master)](https://travis-ci.org/mukundcs1611/user_service)
 
-![alt text](https://travis-ci.org/mukundcs1611/user_service.svg?branch=master)
 
-User-Service 
 
 This repository is part of the student enrollment system project.
 
