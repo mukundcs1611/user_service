@@ -30,9 +30,10 @@ public class User {
 
 
     @Column(unique=true)
-
     private String email;
-
+    //TO Do:Encryption
+    @Column
+    private String password;
     //@OneToOne
     //private Address address;
 
@@ -90,7 +91,14 @@ public class User {
         this.email = email;
     }
 
-  //  public Address getAddress() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+//  public Address getAddress() {
   //      return address;
   //  }
 

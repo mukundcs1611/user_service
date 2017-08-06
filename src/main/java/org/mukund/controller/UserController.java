@@ -12,6 +12,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping(value="user")
 public class UserController {
     @Autowired
@@ -27,7 +28,14 @@ public class UserController {
     public User findOne(@PathVariable("id") String userId){//get
     return userService.findOne(userId);
     }
-
+    @RequestMapping(method=RequestMethod.POST,value="authenticate")
+    public User authenticate(@RequestBody String username, @RequestBody String password){
+        User user=userService.findOne(username);
+        if(user.getPassword().equals(password))
+            return user;//to do:change front end
+        else
+            return null;
+    }
     @RequestMapping(method=RequestMethod.POST,
                     consumes= MediaType.APPLICATION_JSON_UTF8_VALUE,
                     produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
