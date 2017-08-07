@@ -9,7 +9,9 @@ import java.util.UUID;
 @NamedQueries({
         @NamedQuery(name="User.findAll",query="SELECT usr from User usr ORDER BY usr.email ASC"),
         @NamedQuery(name="User.findByEmail",
-                    query="SELECT usr from User usr WHERE usr.email=:pEmail")
+                    query="SELECT usr from User usr WHERE usr.email=:pEmail"),
+        @NamedQuery(name="User.findByUserId",
+                    query="SELECT usr from User usr WHERE usr.userId=:userId")
 
 })
 public class User {

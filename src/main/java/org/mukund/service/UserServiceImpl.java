@@ -14,8 +14,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository repository;
+
     @Autowired
-    private UserRepository repository;
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -30,8 +34,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly=true)
     public List<User> findAll() {
-
-
         return repository.findAll();
     }
 
@@ -62,7 +64,21 @@ public class UserServiceImpl implements UserService {
         if(usr==null){
             throw new NotFoundException("User with id ="+id+" not found");
         }
-
         return repository.update(user);
+    }
+
+    @Override
+    public User authenticate(String param,String password) {
+        User user;
+        if(param.contains("@")){//TODO Front end donot accept username with special characters
+            user= repository.findByEmail(param);
+        }
+        else
+            user=repository.findByUserId(param);
+
+        if(user.getPassword().equals(password)) //TODO Encrypt Password in front and back
+            return user;
+        else
+            return null;
     }
 }

@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class UsertRepositoryImpl implements UserRepository {
+public class UserRepositoryImpl implements UserRepository {
     @PersistenceContext
     private EntityManager em;
     @Override
@@ -57,4 +57,16 @@ public class UsertRepositoryImpl implements UserRepository {
 
         else return null;
     }
+
+    @Override
+    public User findByUserId(String userId) {
+        TypedQuery<User> namedQuery=em.createNamedQuery("User.findByUserId",User.class);
+        namedQuery.setParameter("userId",userId);
+
+        List<User> list=namedQuery.getResultList();
+        if(list!=null && list.size()==1) return list.get(0);
+
+        else return null;
+    }
+
 }

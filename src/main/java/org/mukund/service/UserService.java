@@ -6,9 +6,10 @@ import org.mukund.entity.User;
 import java.util.List;
 
 public interface UserService {
-    public User findOne(String id);
-    public List<User> findAll();
-    public User create(User user);
-    public void delete(String id);
-    public User update(String id,User user);
+     User findOne(String id);
+     List<User> findAll();
+     User create(User user);
+     void delete(String id);
+     User update(String id,User user);
+     User authenticate(String param,String password);
 }

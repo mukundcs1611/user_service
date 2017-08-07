@@ -11,6 +11,6 @@ public interface UserRepository {
      void delete(User user);
      User update(User user);
      User findByEmail(String email);
-
+     User findByUserId(String userId);
 
 }

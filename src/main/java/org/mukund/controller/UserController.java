@@ -9,33 +9,38 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
 @CrossOrigin
 @RequestMapping(value="user")
 public class UserController {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(method= RequestMethod.GET,value="")
-
     public List<User> findAll(){//get
 
         return userService.findAll();
     }
+
     @RequestMapping(method=RequestMethod.GET,value="{id}")
     public User findOne(@PathVariable("id") String userId){//get
     return userService.findOne(userId);
     }
-    @RequestMapping(method=RequestMethod.POST,value="authenticate")
-    public User authenticate(@RequestBody String username, @RequestBody String password){
-        User user=userService.findOne(username);
-        if(user.getPassword().equals(password))
-            return user;//to do:change front end
-        else
-            return null;
+
+    @RequestMapping(method=RequestMethod.POST,value="authenticate",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody User authenticate(@RequestBody Map<String,String> params ){
+        String param =params.get("param");
+        String password=params.get("password");
+        return userService.authenticate(param,password);
     }
+
     @RequestMapping(method=RequestMethod.POST,
                     consumes= MediaType.APPLICATION_JSON_UTF8_VALUE,
                     produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -51,7 +56,7 @@ public class UserController {
     }
 
     @RequestMapping(method=RequestMethod.DELETE,value="{id}")
-    public void delete(String id){
+    public void delete(@PathVariable String id){
         userService.delete(id);
 
     }
